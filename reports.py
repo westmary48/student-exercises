@@ -82,7 +82,7 @@ class StudentExerciseReports():
 
             conn.row_factory = lambda cursor, row: Instructor(
             row[1], row[2], row[3], row[5], row[6],
-        )
+)
 
             db_cursor = conn.cursor()
 
@@ -225,9 +225,9 @@ reports = StudentExerciseReports()
 # reports.all_students()
 # reports.all_cohorts()
 # reports.all_exercises()
-# reports.all_instructors()
+reports.all_instructors()
 # reports.all_javascript()
-reports.all_csharp()
+# reports.all_csharp()
 
 # reports.all_python()
 
@@ -235,8 +235,8 @@ reports.all_csharp()
 # print(f'{student.first_name} {student.last_name} is in {student.cohort}')
 
 
-# instructor = Instructor('Bart', 'Simpson', '@bart', 'Cohort 8','dad jokes')
-# print(f'{instructor.first_name} {instructor.last_name} is in {instructor.cohort}')
+instructor = Instructor('Bart', 'Simpson', '@bart', 'Cohort 8','dad jokes')
+print(f'{instructor.first_name} {instructor.last_name} is in {instructor.cohort}')
 
 # cohort = Cohort('Cohort 8')
 # print(f'{cohort.name}')
