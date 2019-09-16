@@ -218,16 +218,55 @@ class StudentExerciseReports():
             for exercise in all_csharp:
                 print(exercise)
 
+    def exercise_dic(self):
 
+            with sqlite3.connect(self.db_path) as conn:
+                db_cursor = conn.cursor()
+
+                db_cursor.execute("""
+                select e.Id ExerciseId,
+                    e.Exercise,
+                    s.Id,
+                    s.FirstName,
+                    s.LastName
+                from Exercises e
+                join StudentExercise se on se.ExerciseId = e.Id
+                join Student s on s.Id = se.StudentId
+            """)
+
+                dataset = db_cursor.fetchall()
+
+                exercises = dict()
+
+                for row in dataset:
+                    exercise_id = row[0]
+                    exercise_name = row[1]
+                    student_id = row[2]
+                    student_name = f'{row[3]} {row[4]}'
+
+                    if exercise_name not in exercises:
+                        exercises[exercise_name] = [student_name]
+                    else:
+                        exercises[exercise_name].append(student_name)
+                for exercise_name, students in exercises.items():
+                    print(exercise_name)
+                    for student in students:
+                        print(f'\t* {student}')
 
 reports = StudentExerciseReports()
+
 
 # reports.all_students()
 # reports.all_cohorts()
 # reports.all_exercises()
-reports.all_instructors()
+# reports.all_instructors()
 # reports.all_javascript()
 # reports.all_csharp()
+
+
+
+reports.exercise_dic()
+
 
 # reports.all_python()
 
@@ -235,8 +274,8 @@ reports.all_instructors()
 # print(f'{student.first_name} {student.last_name} is in {student.cohort}')
 
 
-instructor = Instructor('Bart', 'Simpson', '@bart', 'Cohort 8','dad jokes')
-print(f'{instructor.first_name} {instructor.last_name} is in {instructor.cohort}')
+# instructor = Instructor('Bart', 'Simpson', '@bart', 'Cohort 8','dad jokes')
+# print(f'{instructor.first_name} {instructor.last_name} is in {instructor.cohort}')
 
 # cohort = Cohort('Cohort 8')
 # print(f'{cohort.name}')
