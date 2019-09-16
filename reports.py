@@ -195,6 +195,29 @@ class StudentExerciseReports():
             for exercise in all_python:
                 print(exercise)
 
+    def all_csharp(self):
+
+        with sqlite3.connect(self.db_path) as conn:
+
+            conn.row_factory = lambda cursor, row: Exercises(
+            row[1], row[2],
+        )
+
+            db_cursor = conn.cursor()
+
+            db_cursor.execute("""
+            select e.Id,
+                e.Exercise,
+                e.Programminglanguage
+            from Exercises e
+            WHERE Programminglanguage = "C#"
+            """)
+
+            all_csharp = db_cursor.fetchall()
+
+            for exercise in all_csharp:
+                print(exercise)
+
 
 
 reports = StudentExerciseReports()
@@ -202,8 +225,9 @@ reports = StudentExerciseReports()
 # reports.all_students()
 # reports.all_cohorts()
 # reports.all_exercises()
-reports.all_instructors()
+# reports.all_instructors()
 # reports.all_javascript()
+reports.all_csharp()
 
 # reports.all_python()
 
