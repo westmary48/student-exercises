@@ -257,7 +257,8 @@ class StudentExerciseReports():
 
     def instrexercise_dic(self):
 
-# Instructor exercise dict
+# Instructor exercise table created and formatted correctly
+
             with sqlite3.connect(self.db_path) as conn:
                 db_cursor = conn.cursor()
 
