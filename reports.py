@@ -254,6 +254,46 @@ class StudentExerciseReports():
                     for student in students:
                         print(f'\t* {student}')
 
+
+    def instrexercise_dic(self):
+
+# Instructor exercise table created and formatted correctly
+
+            with sqlite3.connect(self.db_path) as conn:
+                db_cursor = conn.cursor()
+
+                db_cursor.execute("""
+                select e.Id ExerciseId,
+                    e.Exercise,
+                    i.Id,
+                    i.FirstName,
+                    i.LastName
+                from Exercises e
+                join InstructorExercise ie on ie.ExerciseId = e.Id
+                join Instructor i on i.Id = ie.InstructorId
+            """)
+
+                dataset = db_cursor.fetchall()
+
+                instructors = dict()
+
+                for row in dataset:
+                    exercise_id = row[0]
+                    exercise_name = row[1]
+                    instructor_id = row[2]
+                    instructor_name = f'{row[3]} {row[4]}'
+
+                    if instructor_name not in instructors:
+                        instructors[instructor_name] = [exercise_name]
+                    else:
+                        instructors[instructor_name].append(exercise_name)
+
+                for instructors, exercises  in instructors.items():
+                    print(instructors)
+                    for exercise in exercises:
+                         print(f'\t* {exercise}')
+
+
 reports = StudentExerciseReports()
 
 
@@ -266,7 +306,9 @@ reports = StudentExerciseReports()
 
 
 
-reports.exercise_dic()
+# reports.exercise_dic()
+
+reports.instrexercise_dic()
 
 
 # reports.all_python()
