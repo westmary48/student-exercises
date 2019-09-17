@@ -248,6 +248,7 @@ class StudentExerciseReports():
                         exercises[exercise_name] = [student_name]
                     else:
                         exercises[exercise_name].append(student_name)
+
                 for exercise_name, students in exercises.items():
                     print(exercise_name)
                     for student in students:
